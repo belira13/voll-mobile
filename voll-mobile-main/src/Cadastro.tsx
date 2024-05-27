@@ -2,7 +2,7 @@ import { Image, Text, Box, Checkbox, ScrollView } from 'native-base';
 import Logo from './assets/Logo.png';
 import { Botao } from './componentes/Botao';
 import { EntradaTexto } from './componentes/EntradaTexto';
-import { Titulo } from './componentes/titulo';
+import { Titulo } from './componentes/Titulo';
 import { secoes } from './utils/CadastroEntradaTexto';
 import { useState } from 'react';
 import { useToast } from 'native-base';
