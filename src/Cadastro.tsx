@@ -5,6 +5,7 @@ import { Botao } from './componentes/Botao';
 import { EntradaTexto } from './componentes/EntradaTexto';
 import { Titulo } from './componentes/titulo';
 import { secoes } from './utils/CadastroEntradaTexto';
+import { cadastraPaciente } from './servicos/PacienteServico';
 
     export default function Cadastro({navigation} : any){
     const [numSecao, setNumeroSecao] = useState(0);
@@ -18,6 +19,7 @@ import { secoes } from './utils/CadastroEntradaTexto';
         }else{
             console.log(dados)
             console.log(planos)
+            cadastrar()
         }
     }
 
@@ -32,7 +34,7 @@ import { secoes } from './utils/CadastroEntradaTexto';
     }
 
     async function cadastrar() {
-        const resultado = await cadastrarPaciente({
+        const resultado = await cadastraPaciente({
             cpf: dados.cpf,
             nome: dados.nome,
             email: dados.email,
@@ -49,21 +51,21 @@ import { secoes } from './utils/CadastroEntradaTexto';
             planosSaude: planos,
             imagem: dados.imagem
         })
+        if(resultado){
+            toast.show({
+                title: 'Cadastro Realizado com Sucesso',
+                description: 'Voce ja pode fazer Login',
+                backgroundColor: 'green.500'
+            })
+            navigation.replace('login')
+        }else{
+            toast.show({
+                title: 'Deu ruim',
+                description: 'Voce fez coisa errada',
+                backgroundColor: 'red.500'
+            })
+        }
     };
-    if(resultado){
-        toast.show({
-            title: 'Cadastro Realizado com Sucesso',
-            description: 'Voce ja pode fazer Login',
-            backgroundColor: 'green.500'
-        })
-        navigation.replace('login')
-    }else{
-        toast.show({
-            title: 'Deu ruim',
-            description: 'Voce fez coisa errada',
-            backgroundColor: 'red.500'
-        })
-    }
 
     return (
         <ScrollView flex={1} p={5}>
@@ -117,7 +119,7 @@ import { secoes } from './utils/CadastroEntradaTexto';
                 Voltar
             </Botao>}
             <Botao onPress={() => avancarSecao()} mt={4}>
-                Avançar
+                {numSecao == 2 ? "finalizar" : "avançar"}
             </Botao>
         </ScrollView>
     );
