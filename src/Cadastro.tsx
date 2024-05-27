@@ -31,6 +31,40 @@ import { secoes } from './utils/CadastroEntradaTexto';
         setDados({...dados, [id]:valor})
     }
 
+    async function cadastrar() {
+        const resultado = await cadastrarPaciente({
+            cpf: dados.cpf,
+            nome: dados.nome,
+            email: dados.email,
+            endereco: {
+                cep: dados.cep,
+                rua: dados.cep,
+                numero: dados.numero,
+                estado: dados.estado,
+                complemento: dados.complemento
+            },
+            senha: dados.senha,
+            telefone: dados.telefone,
+            possuiPlanoSaude: dados.length > 0,
+            planosSaude: planos,
+            imagem: dados.imagem
+        })
+    };
+    if(resultado){
+        toast.show({
+            title: 'Cadastro Realizado com Sucesso',
+            description: 'Voce ja pode fazer Login',
+            backgroundColor: 'green.500'
+        })
+        navigation.replace('login')
+    }else{
+        toast.show({
+            title: 'Deu ruim',
+            description: 'Voce fez coisa errada',
+            backgroundColor: 'red.500'
+        })
+    }
+
     return (
         <ScrollView flex={1} p={5}>
             <Image source={Logo} alt='Login'></Image>
@@ -87,4 +121,5 @@ import { secoes } from './utils/CadastroEntradaTexto';
             </Botao>
         </ScrollView>
     );
+    
 }
