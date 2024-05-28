@@ -1,7 +1,6 @@
 import { Paciente } from "../interfaces/Paciente";
 import api from "./api";
 
-
 export async function cadastrarPaciente(paciente: Paciente){
   if(!paciente) return null;
 

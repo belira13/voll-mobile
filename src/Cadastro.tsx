@@ -80,6 +80,7 @@ export default function Cadastro({ navigation }: any) {
       navigation.replace('Login');
     }
     else {
+      console.log('Erro ao fazer cadastro')
       toast.show({
         title: 'Erro ao cadastrar',
         description: 'Verifique os dados e tente novamente',
