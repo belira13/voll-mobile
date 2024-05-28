@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Logo from './assets/Logo.png'
 import { Botao } from './componentes/Botao';
 import { EntradaTexto } from './componentes/EntradaTexto';
-import { Titulo } from './componentes/titulo';
+import { Titulo } from './componentes/Titulo';
 import { secoes } from './utils/CadastroEntradaTexto';
 import { cadastrarPaciente } from './servicos/PacienteServico';
 
@@ -14,14 +14,22 @@ export default function Cadastro({ navigation }: any) {
   const toast = useToast()
 
   function avancarSecao(){
+    if (todosCamposPreenchidos()){
     if(numSecao < secoes.length - 1){
-      setNumSecao(numSecao+1)
+      setNumSecao(numSecao+1);
     }
     else{
-      console.log(dados)
-      console.log(planos)
-      cadastrar()
+      console.log(dados);
+      console.log(planos);
+      cadastrar();
     }
+  }else {
+    toast.show({
+      title: 'Erro',
+      description: 'Por favor, preencha todos os campos.',
+      backgroundColor:'red.500'
+    });
+  }
   }
 
   function voltarSecao(){
@@ -32,6 +40,16 @@ export default function Cadastro({ navigation }: any) {
 
   function atualizarDados(id: string, valor: string){
     setDados({...dados, [id]: valor})
+  }
+
+  function todosCamposPreenchidos(){
+    const campos = secoes[numSecao]?.entradaTexto || [];
+    for (const campo of campos){
+      if(!dados[campo.name]){
+        return false;
+      }
+    }
+    return true
   }
 
   async function cadastrar(){
@@ -53,7 +71,7 @@ export default function Cadastro({ navigation }: any) {
       imagem: dados.imagem
     })
 
-    if (resultado) {
+    if ((resultado) !== '' && planos.length > 0) {
       toast.show({
         title: 'Cadastro realizado com sucesso',
         description: 'Você já pode fazer login',
@@ -86,7 +104,7 @@ export default function Cadastro({ navigation }: any) {
                 placeholder={entrada.placeholder} 
                 key={entrada.id} 
                 secureTextEntry={entrada.secureTextEntry}
-                value={dados[entrada.name]}
+                value={dados[entrada.name] || ''}
                 onChangeText={(text) => atualizarDados(entrada.name, text)}
               />
             )
