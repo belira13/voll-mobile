@@ -37,8 +37,8 @@ export default function Perfil({navigation}) {
 
         <Titulo color="blue.500">Informações pessoais</Titulo>
         <Titulo fontSize="lg" mb={1}>{dadosPaciente.nome}</Titulo>
-        <Text>dadosPaciente.email</Text>
-        <Text>dadosPaciente.endereco.estado</Text>
+        <Text>{dadosPaciente?.email}</Text>
+        <Text>{dadosPaciente?.endereco?.estado}</Text>
         <Botao onPress={ deslogar } mt={4} mb={20}>logout
       </Botao>
         
