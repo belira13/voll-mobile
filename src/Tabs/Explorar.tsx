@@ -3,8 +3,9 @@ import { Botao } from "../componentes/Botao";
 import { CardConsulta } from "../componentes/CardConsulta";
 import { EntradaTexto } from "../componentes/EntradaTexto";
 import { Titulo } from "../componentes/Titulo";
-import { useState } from "react";
 import { buscarEspecialistaPorEstado } from "../servicos/EspecialistaServico";
+import { useState } from "react";
+import { agendarConsulta } from "../servicos/ConsultaServico";
 
 interface Especialista {
   nome: string,
@@ -13,21 +14,21 @@ interface Especialista {
   id: string,
 }
 
-export default function Explorar(){
-  const [estado, setEstado] = useState('')
-  const [especialidade, setEspecialidade] = useState('')
-  const [resultadoBusca, setResultadoBusca] = useState([])
+export default function Explorar({ navigation }) {
+  const [estado, setEstado] = useState('');
+  const [especialidade, setEspecialidade] = useState('');
+  const [resultadoBusca, setResultadoBuscar] = useState([]);
 
   async function buscar() {
-    if(!estado || !especialidade) return null
+    if (!estado || !especialidade) return null
     const resultado = await buscarEspecialistaPorEstado(estado, especialidade)
-    if(resultado){
-      setResultadoBusca(resultado)
+    if (resultado) {
+      setResultadoBuscar(resultado)
       console.log(resultado)
     }
   }
 
-  return(
+  return (
     <ScrollView flex={1} bgColor="white">
       <VStack flex={1} alignItems="flex-start" justifyContent="flex-start" p={5}>
         <Box w="100%" borderRadius="lg" p={3} mt={5} shadow="1" borderRightRadius="md">
@@ -47,13 +48,13 @@ export default function Explorar(){
         </Box>
 
         <Titulo color="blue.500" alignSelf="center">Resultado da Busca</Titulo>
-        {resultadoBusca?.map((especialista, index) => (
+        {resultadoBusca?.map((especialista: Especialista, index) => (
           <VStack flex={1} w="100%" alignItems="flex-start" bgColor="white" key={index}>
-            <CardConsulta 
+            <CardConsulta
               especialidade={especialista.especialidade}
               foto={especialista.imagem}
               nome={especialista.nome}
-              onPress={especialista.nome}
+              onPress={() => navigation.navigate('Agendamento', { especialistaId: especialista.id })}
             />
           </VStack>
         ))}

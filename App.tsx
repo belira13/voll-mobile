@@ -1,16 +1,16 @@
 import { NativeBaseProvider, StatusBar } from 'native-base';
-import { Temas } from './voll-mobile-main/src/estilos/temas';
+import { Temas } from './src/estilos/Temas';
 import Rotas from './src/rotas';
 import api from './src/servicos/api';
 import { useEffect } from 'react';
 
 export default function App() {
   useEffect(() => {
-    async function pegarDados(){
+    async function pegarDados() {
       const resultado = await api.get('/paciente')
-      console.log(resultado.data)
+      console.log(resultado.data);
     }
-  pegarDados()
+    pegarDados();
   })
   return (
     <NativeBaseProvider theme={Temas}>
