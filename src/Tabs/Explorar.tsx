@@ -6,6 +6,7 @@ import { Titulo } from "../componentes/Titulo";
 import { buscarEspecialistaPorEstado } from "../servicos/EspecialistaServico";
 import { useState } from "react";
 import { agendarConsulta } from "../servicos/ConsultaServico";
+import Principal from "./Principal";
 
 interface Especialista {
   nome: string,
@@ -30,6 +31,7 @@ export default function Explorar({ navigation }) {
 
   return (
     <ScrollView flex={1} bgColor="white">
+      <Botao w="15%" ml={5} onPress={() => navigation.navigate('Principal')}>◀</Botao>
       <VStack flex={1} alignItems="flex-start" justifyContent="flex-start" p={5}>
         <Box w="100%" borderRadius="lg" p={3} mt={5} shadow="1" borderRightRadius="md">
           <EntradaTexto
